@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<body>
+<style>
+p{font-size:14px;font-family: sans-serif;}h1{font-family: monospace;}div{font-family:sans-serif;}body{background-color:rgb(230,230,230);}canvas{background-color:white;position: relative;left:150px;bottom:270px;margin:50px;}button{position:relative; top:40px;right:160px;background-color:white;height:22px;width:70px;font-size:14px;border-radius:10px;}#thoughtprocess{font-family:monospace;position:relative;left:0px;bottom:540px;width:200px;}
+</style>
+
+<h1>parabola graphing calculator </h1>
+<p>y = ax^2 + bx + c</p>
+<p>a value:</p><input value = 2 id = "aval" step="0.01" type = "number">
+
+<p>b value:</p><input value = 4 id = "bval" type = "number"><br>
+
+<p>c value:</p><input value = 2 id = "cval" type = "number">
+
+
+<button type="button" onclick="graphpara()">graph</button>
+
+
+
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #89cff0;">Your browser does not support the HTML5 canvas tag.</canvas>
+
+<div id = "thoughtprocess" >Machine thought process:
+
+</div>
+
+<script>
+var cc = document.getElementById("myCanvas");
+var ctx = cc.getContext("2d");
+for(let j= 1;j<=20;j++)
+{ctx.beginPath();ctx.lineWidth="0.5";ctx.moveTo(j*25,0);ctx.lineTo(j*25,500);ctx.strokeStyle="rgb(100,100,100)";ctx.stroke();ctx.closePath();ctx.beginPath();ctx.lineWidth="0.5";ctx.moveTo(0,j*25);ctx.lineTo(500,j*25);ctx.strokeStyle="rgb(100,100,100)";ctx.stroke();ctx.closePath();}
+ctx.beginPath();ctx.lineWidth = "2";ctx.moveTo(250, 0);ctx.lineTo(250, 500);ctx.strokeStyle= "rgb(0,0,0)";ctx.stroke();ctx.moveTo(0, 250);ctx.lineTo(500, 250);ctx.stroke();ctx.closePath();
+//i love visuals taking up tons of space and being 0% complex
+var a;
+var b;
+var digx = 1;
+var c;
+var tx = 10;
+var ty = 10;
+var tz = 10;
+var ctop;
+var derivative;
+var y = 10;
+let num;
+let xn = 1;
+var leftxtop;
+var gix = 80;
+var rightxtop;
+var thinking = document.querySelector("#thoughtprocess");
+var hecks;
+
+
+function graphpara(){
+
+
+hecks = "#"+tx+ty+tz;
+console.log(hecks);
+ctx.lineWidth = "2";
+if (digx <= 1){
+digx++;
+tx += 80;
+}
+else if (digx >1 && digx <=2) {
+digx++;
+ty += gix;
+}
+else if (digx >2 && digx <=3) {
+digx++;
+tx -= gix;
+}
+else if (digx >3&& digx <=4) {
+digx++;
+tz += gix;
+}
+else if (digx >4 && digx <=5) {
+digx++;
+ty -= gix;
+}
+else if (digx >5 && digx <=6) {
+digx++;
+tz -= gix;
+}
+else{
+digx = 0;
+tx =10;
+ty = 10;
+tz = 10;
+}
+
+
+
+
+a = document.querySelector("#aval").value;
+a = parseFloat(a);
+b = document.querySelector("#bval").value;
+b = parseFloat(b);
+c = document.querySelector("#cval").value;
+c = parseFloat(c);
+var vertexx = -b/(2*a);
+var vertexy = a*(vertexx**2) + b*vertexx + c;
+console.log("vertex:" + vertexx + ","+vertexy);
+var vxconv = vertexx *25 +250;
+var vyconv = 2*(vertexy *25 +250);
+
+ctop = c -10;
+
+
+// 2x^2 + 4x + 2
+
+
+var fac1 = [];
+var fac2 = [];
+var fac3 = [];
+var fac4 = [];
+var fac5=10;
+var fac6=10;
+
+num = a*c;
+
+//find all factors
+for(let i = 1; i <= num; i++) {
+    // check if number is a factor
+    if(num % i == 0) {
+      fac1.push(i);
+}
+}
+
+for (let j = 0; j < (fac1.length)/2; j++){
+console.log(fac1[j]);
+fac2.push(fac1[j]);
+fac1.reverse();
+//console.log(fac1);
+console.log(fac1[j]);
+fac2.push(fac1[j]);
+fac1.reverse();
+}
+
+
+//fac4 is for human understanding, will use later
+for(let i = 0; i < fac2.length; i+=2) {
+
+if (fac2[i]+fac2[i+1]==b){
+    fac3.push(fac2[i]);
+    fac3.push(fac2[i+1]);
+
+}
+
+
+
+
+
+
+}
+
+fac5 = (-b + Math.sqrt(b*b -4*a*ctop))/(2*a);
+fac6 = (-b - Math.sqrt(b*b -4*a*ctop))/(2*a);
+console.log(fac5);
+console.log(fac6);
+leftxtop = fac5*25 +250;
+rightxtop = fac6*25 +250;
+
+
+for(let i = 0; i <fac2.length; i+=2) {
+
+    fac4.push(fac2[i]+","+fac2[i+1]);
+}
+ctx.beginPath();
+ctx.strokeStyle = hecks;
+ctx.moveTo(leftxtop,0);
+ctx.quadraticCurveTo(vxconv, vyconv, rightxtop, 0);
+console.log(leftxtop+","+0+","+vxconv+","+vyconv+","+rightxtop+","+0);
+ctx.stroke();
+ctx.closePath();
+/*ctx.beginPath();
+ctx.lineWidth = "10";
+ctx.moveTo(rightxtop, 0+5);
+ctx.lineTo(rightxtop, 0-5);
+ctx.stroke();
+ctx.closePath();
+ctx.beginPath();
+ctx.lineWidth = "10";
+ctx.moveTo(vxconv, vyconv+5);
+ctx.lineTo(vxconv, vyconv-5);
+ctx.stroke();
+ctx.beginPath();
+ctx.lineWidth = "10";
+ctx.moveTo(leftxtop, 0+5);
+ctx.lineTo(leftxtop, 0-5);
+ctx.stroke();
+ctx.closePath();*/
+if (a==1){
+thinking.innerHTML = "Machine thought process:" + "Factors that work are "+fac3[0]+"and"+fac3[1]+"Since A = 1, we can just write those numbers in two groups.";
+}
+else if (a>1){
+thinking.innerHTML = "Machine thought process:" + "Factors that work are "+fac3[0]+" and "+fac3[1]+"<br> Knowing that A > 1, we replace the bx with the values, then split the equation.";
+}
+
+
+}
+
+</script>
+</body>
+</html>
