@@ -176,6 +176,7 @@ for(let i = 0; i <fac2.length; i+=2) {
 
     fac4.push(fac2[i]+","+fac2[i+1]);
 }
+  //BUG FOUND, QUADRATIC MINIMUMS BELOW -10 DONT GRAPH, ASSUMED TO APPLY TO MAXIMUMS TOO. CREATE SYSTEM TO INCREASE GRAPH SIZE WHEN NEEDED
 ctx.beginPath();
 ctx.strokeStyle = hecks;
 ctx.moveTo(leftxtop,0);
